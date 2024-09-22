@@ -7,6 +7,7 @@ import HeaderModal from './HeaderModal';
 import Input from '../components/Input';
 import RoundedInput from './RoundedInput';
 import taskService from '../../services/api.service';
+import  { showMessage } from 'react-native-flash-message';
 
 const CreateTaskModal = ({ onPress, existingTask = null, onSaveSuccess }) => {
   const saveLoading = useSelector(state => state.taskReducer.saveLoading);
@@ -42,10 +43,18 @@ const CreateTaskModal = ({ onPress, existingTask = null, onSaveSuccess }) => {
 
       if (existingTask) {
         await taskService.update(existingTask.id, taskData);
-        Alert.alert('Success', 'Task updated successfully!');
+        showMessage({
+          message: "Task updated successfully!",
+          type: "success", 
+        });
+        // Alert.alert('Success', 'Task updated successfully!');
       } else {
         await taskService.save(taskData);
-        Alert.alert('Success', 'Task created successfully!');
+        showMessage({
+          message: "Task created successfully!",
+          type: "success", 
+        });
+        // Alert.alert('Success', 'Task created successfully!');
       }
 
       if (onSaveSuccess) {
@@ -83,13 +92,15 @@ const CreateTaskModal = ({ onPress, existingTask = null, onSaveSuccess }) => {
 
         {/* Priority Picker */}
         <Text style={styles.title}>Priority</Text>
-        <Picker
-          selectedValue={inputData.Priority}
-          onValueChange={(itemValue) => setInputData({ ...inputData, Priority: itemValue })}>
-          <Picker.Item label="High" value="high" />
-          <Picker.Item label="Medium" value="medium" />
-          <Picker.Item label="Low" value="low" />
-        </Picker>
+      
+          <Picker
+            selectedValue={inputData.Priority}
+            onValueChange={(itemValue) => setInputData({ ...inputData, Priority: itemValue })}>
+            <Picker.Item color='#000' style={{ backgroundColor: '#fff' }} label="High" value="high" />
+            <Picker.Item color='#000' style={{ backgroundColor: '#fff' }} label="Medium" value="medium" />
+            <Picker.Item color='#000' style={{ backgroundColor: '#fff' }} label="Low" value="low" />
+          </Picker>
+      
 
         <RoundedButton
           title={existingTask ? 'Update' : 'Save'}

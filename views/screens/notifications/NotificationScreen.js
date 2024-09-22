@@ -4,7 +4,7 @@ import React from 'react'
 const NotificationScreen = () => {
   return (
     <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      <Text>NotificationScreen</Text>
+      <Text style={{fontSize:24,color:'#000'}}>NotificationScreen</Text>
     </View>
   )
 }

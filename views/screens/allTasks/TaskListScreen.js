@@ -4,7 +4,7 @@ import React from 'react'
 const TaskListScreen = () => {
   return (
     <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-      <Text>TaskListScreen</Text>
+      <Text style={{fontSize:24,color:'#000'}}>TaskListScreen</Text>
     </View>
   )
 }

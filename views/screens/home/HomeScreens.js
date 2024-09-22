@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, StyleSheet, Button, TextInput, Switch, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Button, TextInput, Switch, TouchableOpacity,RefreshControl  } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FloatingButton from '../../components/FloatingButton';
 import CreateTaskModal from '../../components/CreateTaskModal';
@@ -8,7 +8,7 @@ import taskService from '../../../services/api.service';
 import Modal from 'react-native-modal';
 import CommonStyles from '../../../constants/CommonStyles';
 import DotMenu from '../../components/DotMenu';
-import FlashMessage, { showMessage } from 'react-native-flash-message';
+import  { showMessage } from 'react-native-flash-message';
 
 const HomeScreens = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -20,6 +20,7 @@ const HomeScreens = () => {
   const [selectedPriority, setSelectedPriority] = useState('all');
   const [searchText, setSearchText] = useState('');
   const [statistics, setStatistics] = useState({ total: 0, completed: 0, pending: 0 });
+  const [refreshing, setRefreshing] = useState(false);
 
   useEffect(() => {
     loadTasks();
@@ -32,9 +33,11 @@ const HomeScreens = () => {
       setTasks(fetchedTasks);
       updateStatistics(fetchedTasks);
       setLoading(false);
+      setRefreshing(false);
     } catch (error) {
       console.error("Error loading tasks: ", error);
       setLoading(false);
+      setRefreshing(false);
     }
   };
 
@@ -67,6 +70,11 @@ const HomeScreens = () => {
     loadTasks();
   };
 
+  const onRefresh = () => {
+    setRefreshing(true); // Start the refresh
+    loadTasks(); // Reload tasks
+  };
+
   return (
     <>
       <FloatingButton
@@ -94,14 +102,15 @@ const HomeScreens = () => {
             style={styles.searchInput}
             value={searchText}
             onChangeText={setSearchText}
+            placeholderTextColor={'grey'}
           />
           <TouchableOpacity activeOpacity={.8} onPress={() => setFilterModalVisible(true)} style={styles.filterBtn}>
             <AntDesign
               name="filter"
               size={24}
-
+              color="grey"
             />
-            <Text style={{ marginLeft: 4, fontWeight: '500' }}>Filter</Text>
+            <Text style={{ marginLeft: 4, fontWeight: '500',color:'grey' }}>Filter</Text>
           </TouchableOpacity>
         </View>
 
@@ -145,6 +154,9 @@ const HomeScreens = () => {
                 </View>
               </View>
             )}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            } 
           />
         )}
 
@@ -248,7 +260,8 @@ const styles = StyleSheet.create({
   searchInput: {
     padding: 6,
     paddingHorizontal: 12,
-    width: '60%'
+    width: '60%',
+    color:'#000'
   },
   filterBtn: {
     marginRight: 10,
