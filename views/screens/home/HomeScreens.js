@@ -7,6 +7,8 @@ import FilterModal from '../../components/FilterModal';
 import taskService from '../../../services/api.service';
 import Modal from 'react-native-modal';
 import CommonStyles from '../../../constants/CommonStyles';
+import DotMenu from '../../components/DotMenu';
+import FlashMessage, { showMessage } from 'react-native-flash-message';
 
 const HomeScreens = () => {
   const [isModalVisible, setModalVisible] = useState(false);
@@ -104,7 +106,6 @@ const HomeScreens = () => {
         </View>
 
 
-        {/* Task List */}
         {loading ? (
           <Text>Loading tasks...</Text>
         ) : (
@@ -117,23 +118,30 @@ const HomeScreens = () => {
                 <View>
                   <Text style={styles.taskTitle}>{item.title}</Text>
                   <Text style={styles.taskStatus}>{item.status}</Text>
-                  <Text>Priority: {item.priority || 'No Priority'}</Text>
+                  <Text style={{color:'#000'}}>Priority: {item.priority || 'No Priority'}</Text>
                 </View>
 
                 <View>
                   <Switch
                     value={item.status === 'completed'}
                     onValueChange={() => toggleTaskStatus(item)}
+                    style={{marginBottom:8}}
                   />
-                  <TouchableOpacity
-                    activeOpacity={.8}
-                    onPress={() => {
+                  <DotMenu
+                    title={item.title}
+                    onPressEdit={() => {
                       setSelectedTask(item);
                       setModalVisible(true);
-                    }} style={styles.editBtn}>
-                    <Text style={{ color: '#fff' }}>Edit</Text>
-                  </TouchableOpacity>
-
+                    }}
+                    onPressDelete={async () => {
+                      await taskService.delete(item.id);
+                      loadTasks();
+                      showMessage({
+                        message: "Task deleted successfully!",
+                        type: "success", 
+                      });
+                    }}
+                  />
                 </View>
               </View>
             )}
@@ -185,9 +193,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20
   },
-
-
-
   taskItem: {
     padding: 10,
     borderWidth: 1,
@@ -199,7 +204,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 8
   },
-  taskTitle: { fontSize: 18 },
+  taskTitle: { fontSize: 18, color: '#000' },
   taskStatus: { color: '#888' },
   statsContainer: {
     flexDirection: 'row',

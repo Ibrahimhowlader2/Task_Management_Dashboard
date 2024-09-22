@@ -13,7 +13,7 @@ const RootStackScreen = () => {
       screenOptions={{ headerShown: false }}
       Options={{}}
       initialRouteName="AppStack">
-      <RootStack.Screen name='AuthLoading' component={AppLoadingScreen} />
+      {/* <RootStack.Screen name='AuthLoading' component={AppLoadingScreen} /> */}
       <RootStack.Screen name="AppStack" component={AppStack} />
     </RootStack.Navigator>
   );

@@ -99,7 +99,7 @@ const SettingScreen = props => {
             <Text style={styles.profileName}>John Doe</Text>
 
             <Text style={styles.profileAddress}>
-              123 Maple Street. Anytown, PA 17101
+              123 Shariatpur. Dhaka, Bangladesh
             </Text>
           </View>
         </View>

@@ -129,11 +129,13 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: 'bold',
         marginBottom: 20,
+        color:'#000'
     },
     modalSubtitle: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 10,
+        color:'grey'
     },
     buttonGroup: {
         flexDirection: 'row',

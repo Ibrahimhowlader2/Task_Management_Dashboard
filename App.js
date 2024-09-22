@@ -6,11 +6,12 @@ import {
   StatusBar,
 } from 'react-native';
 import React from 'react';
-import {DefaultTheme, NavigationContainer} from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
 import store from './store';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import RootStackScreen from './navigations/RootStack';
+import { MenuProvider } from 'react-native-popup-menu';
 
 const App = () => {
   const navTheme = DefaultTheme;
@@ -19,12 +20,14 @@ const App = () => {
   return (
     <>
       <Provider store={store}>
-        <SafeAreaView style={{flex: 1, backgroundColor: 'transparent'}}>
-          <NavigationContainer theme={navTheme}>
-            <RootStackScreen />
-          </NavigationContainer>
-          <FlashMessage position="bottom" />
-        </SafeAreaView>
+        <MenuProvider>
+          <SafeAreaView style={{ flex: 1, backgroundColor: 'transparent' }}>
+            <NavigationContainer theme={navTheme}>
+              <RootStackScreen />
+            </NavigationContainer>
+            <FlashMessage position="bottom" />
+          </SafeAreaView>
+        </MenuProvider>
       </Provider>
     </>
   );

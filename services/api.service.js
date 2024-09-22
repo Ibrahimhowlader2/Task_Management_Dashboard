@@ -10,10 +10,9 @@ const initialTasks = [
     { id: 5, title: 'Task 5', status: 'pending',priority: 'low' },
 ];
 
-const useAsyncStorage = true; // Toggle this to switch between live API and AsyncStorage
+const useAsyncStorage = true; 
 
 const taskService = {
-    // Fetch tasks from either AsyncStorage or live API
     getList: async () => {
         if (useAsyncStorage) {
             try {
@@ -26,14 +25,13 @@ const taskService = {
                 }
             } catch (error) {
                 console.error("Error fetching tasks: ", error);
-                return initialTasks; // Return initial tasks on error
+                return initialTasks; 
             }
         } else {
             return await getApi("task/task-lists", {}, {}); // Live API request
         }
     },
 
-    // Save new task to AsyncStorage or live API
     save: async (data) => {
         if (useAsyncStorage) {
             try {
@@ -49,7 +47,6 @@ const taskService = {
         }
     },
 
-    // Update task in AsyncStorage or live API
     update: async (id, data) => {
         if (useAsyncStorage) {
             try {
@@ -65,7 +62,7 @@ const taskService = {
         }
     },
 
-    // Delete task from AsyncStorage or live API
+
     delete: async (id) => {
         if (useAsyncStorage) {
             try {

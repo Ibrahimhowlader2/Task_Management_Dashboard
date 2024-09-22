@@ -122,7 +122,7 @@ const FloatingButton = props => {
                 style={[
                   styles.button,
                   secondBtnStyle,
-                  { backgroundColor: '#5465ff' },
+                  { backgroundColor: '#195ADC' },
                 ]}>
                 <Icon name="clipboard-plus-outline" size={28} color="#fff" />
                 <Animated.View
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     width: 55,
     height: 55,
     borderRadius: 30,
-    backgroundColor: '#0094FF',
+    backgroundColor: '#195ADC',
   },
   btnText: {
     color: 'white',
@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     width: 100,
     fontWeight: '600',
     textAlign: 'center',
-    backgroundColor: "#5465ff",
+    backgroundColor: "#195ADC",
     padding: 5,
     borderRadius: 5
 
